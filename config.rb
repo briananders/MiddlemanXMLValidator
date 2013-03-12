@@ -47,24 +47,15 @@
 #   end
 # end
 
-def validate(document_path, schema_path, root_element)
-    schema = Nokogiri::XML::Schema(File.read(schema_path))
-    document = Nokogiri::XML(File.read(document_path))
-    schema.validate(document.xpath("//#{root_element}").to_s)
-end
 
 
+# def validate(document_path, schema_path, root_element)
+#     schema = Nokogiri::XML::Schema(File.read(schema_path))
+#     document = Nokogiri::XML(File.read(document_path))
+#     schema.validate(document.xpath("//#{root_element}").to_s)
+# end
 
-module MyFeature
-    class << self
-        def registered(app)
-            app.after_build do |builder|
-                puts "--After Build--"
-            end
-        end
-        alias :included :registered
-    end
-end
+require 'validate.rb' 
 
 set :css_dir, 'stylesheets'
 
@@ -96,5 +87,5 @@ configure :build do
 
     puts "--Before Build--"
 
-    activate MyFeature
+    activate :my_feature
 end
