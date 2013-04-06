@@ -21,7 +21,7 @@ set :images_dir, 'images'
 
 configure :build do
 
-    puts "--Before Build--"
+    puts "","--Before Build--",""
 
     activate :my_feature
 end
