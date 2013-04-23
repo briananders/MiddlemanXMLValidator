@@ -6,14 +6,26 @@ module MyFeature
         def registered(app)
             app.after_build do |builder|
                 puts "","--After Build--",""
-                Dir.glob("build/*.xml").each do |full_path|
-                	puts "   Validating.....  " + full_path
+                Dir.glob("build/*BingSiteAuth.xml").each do |full_path|
+                	puts "","   Validating BingSiteAuth.xml.....  " + full_path
 
                      MyFeature.validate_file(full_path, 'XMLSchema.xsd')
                 	
                 end
+                Dir.glob("build/*crossdomain.xml").each do |full_path|
+                  puts "","   Validating crossdomain.xml.....  " + full_path
+
+                     MyFeature.validate_file(full_path, 'XMLSchema.xsd')
+                  
+                end
+                Dir.glob("build/*Sitemap.xml").each do |full_path|
+                  puts "","   Validating Sitemap.xml.....  " + full_path
+
+                     MyFeature.validate_file(full_path, 'Sitemap.xsd')
+                  
+                end
                 Dir.glob("build/*.rss").each do |full_path|
-                	puts "   Validating.....  " + full_path
+                	puts "","   Validating RSS.....  " + full_path
 
                      MyFeature.validate_file(full_path, 'RSSSchema.xsd')
                 	
