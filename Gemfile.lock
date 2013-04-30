@@ -56,6 +56,7 @@ GEM
       sprockets (~> 2.1, < 2.5)
       sprockets-sass (~> 0.9.1)
     multi_json (1.6.1)
+    nokogiri (1.5.9)
     padrino-core (0.10.7)
       activesupport (~> 3.2.0)
       http_router (~> 0.10.2)
@@ -99,3 +100,4 @@ PLATFORMS
 DEPENDENCIES
   libxml-ruby (~> 2.6.0)
   middleman (~> 3.0.12)
+  nokogiri (~> 1.5.6)

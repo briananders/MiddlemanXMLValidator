@@ -23,5 +23,6 @@ configure :build do
 
     puts "","--Before Build--",""
 
-    activate :my_feature
+    activate :validate_libxml
+    activate :validate_nokogiri
 end
