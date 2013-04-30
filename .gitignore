@@ -13,5 +13,5 @@
 # Ignore Sass' cache
 /.sass-cache
 
-/.DS_Store
-/.gitignore
+.DS_Store
+.gitignore
