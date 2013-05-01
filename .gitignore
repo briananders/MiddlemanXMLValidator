@@ -14,4 +14,16 @@
 /.sass-cache
 
 .DS_Store
-.gitignore
+
+/vendor
+/tmp
+/test
+/source
+/script
+/public
+/log
+/lib
+/doc
+/db
+/config
+/app
