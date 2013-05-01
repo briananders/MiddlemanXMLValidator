@@ -9,32 +9,24 @@ module ValidateLibXml
     class << self
         def registered(app)
             app.after_build do |builder|
-                puts "","--After Build--",""
+                puts "" , "Validating with LibXML" , ""
                 Dir.glob("build/*BingSiteAuth.xml").each do |full_path|
-                    puts "","   Validating BingSiteAuth.xml.....  " + full_path
-
+                    puts "" , "   Validating #{full_path}....."
                     ValidateLibXml.validate_file(full_path, 'XMLSchema.xsd')
-                	
                 end
                 Dir.glob("build/*crossdomain.xml").each do |full_path|
-                    puts "","   Validating crossdomain.xml.....  " + full_path
-
+                    puts "" , "   Validating #{full_path}....."
                     ValidateLibXml.validate_file(full_path, 'XMLSchema.xsd')
-                  
                 end
                 Dir.glob("build/*Sitemap.xml").each do |full_path|
-                    puts "","   Validating Sitemap.xml.....  " + full_path
-
+                    puts "" , "   Validating #{full_path}....."
                     ValidateLibXml.validate_file(full_path, 'Sitemap.xsd')
-                  
                 end
                 Dir.glob("build/*.rss").each do |full_path|
-                    puts "","   Validating RSS.....  " + full_path
-
+                    puts "" , "   Validating #{full_path}....."
                     ValidateLibXml.validate_file(full_path, 'RSSSchema.xsd')
-                	
                 end
-                puts "","--Done Validating--",""
+                puts "" , "Validation with LibXML Complete" , ""
             end
         end
         alias :included :registered
@@ -71,51 +63,48 @@ module ValidateNokoGiri
     class << self
         def registered(app)
             app.after_build do |builder|
-                puts "","--After Build--",""
+                puts "" , "Validating with NokoGiri" , ""
                 Dir.glob("build/*BingSiteAuth.xml").each do |full_path|
-                    puts "","   Validating BingSiteAuth.xml.....  " + full_path
-
-                    ValidateNokoGiri.validate(full_path, 'XMLSchema.xsd', 'users').each do |error|
-                        puts error.message
+                    puts "" , "   Validating #{full_path}....." + (ValidateNokoGiri.valid(full_path, 'XMLSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
+                    ValidateNokoGiri.validate(full_path, 'XMLSchema.xsd').each do |error|
+                        puts "     " + error.message.red
                     end
-                    
                 end
                 Dir.glob("build/*crossdomain.xml").each do |full_path|
-                    puts "","   Validating crossdomain.xml.....  " + full_path
-
-                    ValidateNokoGiri.validate(full_path, 'XMLSchema.xsd', 'cross-domain-policy').each do |error|
-                        puts error.message
+                    puts "" , "   Validating #{full_path}....." + (ValidateNokoGiri.valid(full_path, 'XMLSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
+                    ValidateNokoGiri.validate(full_path, 'XMLSchema.xsd').each do |error|
+                        puts "     " + error.message.red
                     end
-                  
                 end
                 Dir.glob("build/*Sitemap.xml").each do |full_path|
-                    puts "","   Validating Sitemap.xml.....  " + full_path
-
-                    ValidateNokoGiri.validate(full_path, 'Sitemap.xsd', 'urlset').each do |error|
-                        puts error.message
+                    puts "" , "   Validating #{full_path}....." + (ValidateNokoGiri.valid(full_path, 'Sitemap.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
+                    ValidateNokoGiri.validate(full_path, 'Sitemap.xsd').each do |error|
+                        puts "     " + error.message.red
                     end
-                  
                 end
                 Dir.glob("build/*.rss").each do |full_path|
-                    puts "","   Validating RSS.....  " + full_path
-
-                    ValidateNokoGiri.validate(full_path, 'RSSSchema.xsd', 'channel').each do |error|
-                        puts error.message
+                    puts "" , "   Validating #{full_path}....." + (ValidateNokoGiri.valid(full_path, 'RSSSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
+                    ValidateNokoGiri.validate(full_path, 'RSSSchema.xsd').each do |error|
+                        puts "     " + error.message.red
                     end
-                    
                 end
-                puts "","--Done Validating--",""
+                puts "" , "Validation with NokoGiri Complete" , ""
             end
         end
         alias :included :registered
     end
 
-    def self.validate(document_path, schema_path, root_element)
+    def self.validate(document_path, schema_path)
         schema = Nokogiri::XML::Schema(File.read(schema_path))
         document = Nokogiri::XML(File.read(document_path))
-        schema.validate(document.xpath("//#{root_element}").to_s)
+        schema.validate(document)
     end
 
+    def self.valid(document_path, schema_path)
+        schema = Nokogiri::XML::Schema(File.read(schema_path))
+        document = Nokogiri::XML(File.read(document_path))
+        schema.valid?(document)
+    end
 end
 
 ::Middleman::Extensions.register(:validate_libxml, ValidateLibXml)

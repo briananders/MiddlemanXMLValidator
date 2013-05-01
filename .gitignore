@@ -5,25 +5,25 @@
 # git config --global core.excludesfile ~/.gitignore_global
 
 # Ignore bundler config
-/.bundle
+.bundle
 
 # Ignore the build directory
-/build
+build
 
 # Ignore Sass' cache
-/.sass-cache
+.sass-cache
 
 .DS_Store
 
-/vendor
-/tmp
-/test
-/source
-/script
-/public
-/log
-/lib
-/doc
-/db
-/config
-/app
+vendor
+tmp
+test
+source
+script
+public
+log
+lib
+doc
+db
+config
+app
