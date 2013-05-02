@@ -15,14 +15,4 @@ build
 
 .DS_Store
 
-vendor
-tmp
-test
-/source/
-script
-public
-log
-doc
-db
-config
-app
+source
