@@ -12,17 +12,7 @@
 # require 'libxml-ruby'
 require 'validate.rb' 
 
-set :css_dir, 'stylesheets'
-
-set :js_dir, 'javascripts'
-
-set :images_dir, 'images'
-
-
 configure :build do
 
-    puts "","--Before Build--",""
-
-    activate :validate_libxml
     activate :validate_nokogiri
 end
