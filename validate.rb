@@ -17,8 +17,8 @@ module Middleman
 						end
 					end
 					Dir.glob("build/*crossdomain.xml").each do |full_path|
-						puts "" , "   Validating #{full_path}....." + (ValidateNokoGiri.valid(full_path, 'XMLSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						ValidateNokoGiri.validate(full_path, 'XMLSchema.xsd').each do |error|
+						puts "" , "   Validating #{full_path}....." + (ValidateNokoGiri.valid(full_path, 'crossdomain.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
+						ValidateNokoGiri.validate(full_path, 'crossdomain.xsd').each do |error|
 							puts "     " + error.message
 						end
 					end
