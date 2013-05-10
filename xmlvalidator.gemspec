@@ -15,13 +15,17 @@ Gem::Specification.new do |s|
                    "Gemfile.lock",
                    "README.md",
                    "Rakefile",
+                   "lib/middleman_xmlvalidator.rb",
                    "lib/middleman-xmlvalidator.rb",
-                   "lib/middleman-xmlvalidator/version.rb",
-                   "lib/middleman-xmlvalidator/middleman_xmlvalidator.rb",
-                   "lib/middleman-xmlvalidator/xmlvalidator.rb",
-                   "lib/middleman-schema/RSSSchema.xsd",
-                   "lib/middleman-schema/Sitemap.xsd",
-                   "lib/middleman-schema/XMLSchema.xsd",
-                   "lib/middleman-schema/XMLSchemaa.xsd"
+                   "lib/middleman-xmlvalidator/validate.rb",
+                   "lib/schema/RSSSchema.xsd",
+                   "lib/schema/Sitemap2.xsd",
+                   "lib/schema/Sitemap3.xsd",
+                   "lib/schema/BingSiteAuth.xsd",
+                   "lib/schema/crossdomain.xsd"
                  ]
+
+  s.add_runtime_dependency("middleman", ["~> 3.0.12"])
+  s.add_development_dependency("middleman", ["~> 3.0.12"])
+  s.add_development_dependency("nokogiri", ["~> 1.5.6"])
 end

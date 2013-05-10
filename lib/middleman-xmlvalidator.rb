@@ -1,2 +1,1 @@
-require "middleman-core"
-
+require "middleman-xmlvalidator/feature"

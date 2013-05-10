@@ -1,5 +1,5 @@
 module Middleman
-  module XMLValidator
-    VERSION = "1.0.0"
+  module ValidateNokoGiri
+    VERSION = "0.0.1"
   end
 end
