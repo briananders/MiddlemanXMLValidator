@@ -17,4 +17,5 @@ build
 
 source
 config.ru
+config.rb
 Gemfile.lock
