@@ -1,6 +1,6 @@
 ##config.rb
 
-# require 'validate.rb' 
+require "lib/middleman-xmlvalidator"
 
 configure :build do
 
