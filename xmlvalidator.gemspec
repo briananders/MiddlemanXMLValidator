@@ -14,7 +14,23 @@ Gem::Specification.new do |s|
     
   s.rubyforge_project = "middleman-xmlvalidator"
 
-  s.files         = `git ls-files`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files         = [".gitignore",
+                     ".travis.yml",
+                     "Gemfile",
+                     "Gemfile.lock",
+                     "README.md",
+                     "Rakefile",
+                     "lib/middleman-xmlvalidator.rb",
+                     "lib/middleman-xmlvalidator/feature.rb",
+                     "lib/middleman-xmlvalidator/version.rb",
+                     "lib/middleman_xmlvalidator.rb",
+                     "lib/schema/BingSiteAuth.xsd",
+                     "lib/schema/RSSSchema.xsd",
+                     "lib/schema/Sitemap2.xsd",
+                     "lib/schema/Sitemap3.xsd",
+                     "lib/schema/XMLSchema.xsd",
+                     "lib/schema/crossdomain.xsd",
+                     "xmlvalidator.gemspec"]
+                     
   s.require_paths = ["lib"]
 end
