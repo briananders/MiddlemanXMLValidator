@@ -3,7 +3,7 @@ lib = File.expand_path('../lib/', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "xmlvalidator"
-  s.version     = '1.0.0'
+  s.version     = '0.0.1'
   s.date        = '2013-04-28'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Brian Anders"]
@@ -11,19 +11,12 @@ Gem::Specification.new do |s|
   s.summary     = "Middleman extension to validate xml"
   s.description = "Middleman extension to validate xml using NokoGiri"
   s.email       = 'example@email.com'
-  s.files       = ["Gemfile",
-                   "Gemfile.lock",
-                   "README.md",
-                   "Rakefile",
-                   "lib/middleman_xmlvalidator.rb",
-                   "lib/middleman-xmlvalidator.rb",
-                   "lib/middleman-xmlvalidator/validate.rb",
-                   "lib/schema/RSSSchema.xsd",
-                   "lib/schema/Sitemap2.xsd",
-                   "lib/schema/Sitemap3.xsd",
-                   "lib/schema/BingSiteAuth.xsd",
-                   "lib/schema/crossdomain.xsd"
-                 ]
+    
+  s.rubyforge_project = "middleman-xmlvalidator"
+
+  s.files         = `git ls-files`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.require_paths = ["lib"]
 
   s.add_runtime_dependency("middleman", ["~> 3.0.12"])
   s.add_development_dependency("middleman", ["~> 3.0.12"])
