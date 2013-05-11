@@ -2,9 +2,6 @@
 
 A middleman extension that will search for all .xml and .rss files and check their validation against a .xsd schema.
 
-
- [official project page](http://alexcash.github.com/jQuery.last.fm/).
-
 ### Usage:
 
 You'll first have to download and install the gem.
