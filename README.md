@@ -1,30 +1,41 @@
-## Middleman-XMLValidator
+# Middleman::Xmlvalidator
 
-A middleman extension that will search for all .xml and .rss files and check their validation against a .xsd schema.
+TODO: Write a gem description
 
-### Usage:
+## Installation
 
-You'll first have to download and install the gem.
+Add this line to your application's Gemfile:
 
-	$ git clone git://github.com/briananders/MiddlemanXMLValidator.git
+    gem 'middleman-xmlvalidator', '>= 0.1.0'
 
-	$ gem build xmlvalidator.gemspec
-	$ gem install xmlvalidator-0.0.1.gem
+And then execute:
 
-In your config.rb file, you'll need to add something like this:
+    $ bundle install
 
-	require "lib/middleman-xmlvalidator"
+Or install it yourself as:
 
-	configure :build do
-	    activate :validate_nokogiri
-	end
+    $ gem install middleman-xmlvalidator
 
-Then simply call:
+## Usage
 
-	$ middleman build
+inside your config.rb file, add something like this:
 
+		configure :build do
 
+		  activate :validate
 
-###License:
-Copyright © 2013 Brian Anders
-Dual licensed under the MIT and GPL licenses.
+		end
+
+When you call
+
+		$ middleman build
+
+your .xml and .rss files will be validated against standard schema.
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
