@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xmlvalidator (0.0.1)
+    xmlvalidator (0.0.2)
 
 GEM
   remote: http://rubygems.org/

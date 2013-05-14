@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'nokogiri'
+gem 'nokogiri'
 
 module ValidateNokoGiri
 	class << self
