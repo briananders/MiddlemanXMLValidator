@@ -24,6 +24,6 @@ Gem::Specification.new do |g|
   g.add_development_dependency("bundler", ["~> 1.3"])
   g.add_development_dependency("rake")
 
-  g.add_runtime_dependency("nokogiri", ["~>1.5.6"])
-  g.add_runtime_dependency("middleman", ["~> 3.0.12"])
+  g.add_runtime_dependency("nokogiri", [">1.5.6"])
+  g.add_runtime_dependency("middleman", ["> 3.0.12"])
 end

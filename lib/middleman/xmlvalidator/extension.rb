@@ -6,40 +6,27 @@ module Middleman
 				app.after_build do |builder|
 					puts "", "Validating with NokoGiri", ""
 
-					Dir.glob("build/**/*BingSiteAuth.xml").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'BingSiteAuth.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'BingSiteAuth.xsd').each do |error|
-							puts "     " + error.message
-						end
-					end
+					files = ['.xml', '.rss'].collect { |extension| Dir.glob("build/**/*" + extension) }.flatten
+					files.each do |full_path|
+						name, validator = full_path.split('/').last
 
-					Dir.glob("build/**/*crossdomain.xml").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'crossdomain.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'crossdomain.xsd').each do |error|
-							puts "     " + error.message
+						validator = case name
+						when "BingSiteAuth.xml"
+							"BingSiteAuth.xsd"
+						when "crossdomain.xml"
+							"crossdomain.xsd"
+						when "sitemap.xml"
+							"Sitemap3.xsd"
+						when "feed.rss"
+							"RSSSchema.xsd"
+						else
+							"XMLSchema.xsd"
 						end
-					end
 
-					Dir.glob("build/**/*Sitemap.xml").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'Sitemap3.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'Sitemap3.xsd').each do |error|
+						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, validator) == true ? "COMPLETE".green : "ERRORS FOUND".red)
+						Xmlvalidator.validate(full_path, validator).each do |error|
 							puts "     " + error.message
-						end
-					end
-
-					Dir.glob("build/**/*.rss").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'RSSSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'RSSSchema.xsd').each do |error|
-							puts "     " + error.message
-						end
-					end
-
-					Dir.glob("build/**/*.xml").each do |full_path|
-						if not (full_path.match(/^.*BingSiteAuth.xml$/) || full_path.match(/^.*crossdomain.xml$/) || full_path.match(/^.*Sitemap.xml$/))
-							puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'XMLSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-							Xmlvalidator.validate(full_path, 'XMLSchema.xsd').each do |error|
-								puts "     " + error.message
-							end
+							builder.instance_eval { @had_errors = true if !@had_errors } if name == "feed.rss"
 						end
 					end
 
