@@ -3,36 +3,30 @@ module Middleman
     class << self
 			def registered(app)
 				require 'nokogiri'
+
 				app.after_build do |builder|
 					puts "", "Validating with NokoGiri", ""
 
-					files = ['.xml', '.rss'].collect { |extension| Dir.glob("build/**/*" + extension) }.flatten
-					files.each do |full_path|
-						name, validator = full_path.split('/').last
-
-						validator = case name
-						when "BingSiteAuth.xml"
-							"BingSiteAuth.xsd"
-						when "crossdomain.xml"
-							"crossdomain.xsd"
-						when "sitemap.xml"
-							"Sitemap3.xsd"
-						when "feed.rss"
-							"RSSSchema.xsd"
-						else
-							"XMLSchema.xsd"
-						end
+					Xmlvalidator.files_to_validate.each do |full_path|
+						file_name = full_path.split('/').last
+						validator_file = file_name.gsub(/\.\w*/, '.xsd')
+						validator_filepath = File.join(File.dirname(__FILE__), '/schema/' + validator_file)
+						validator = File.exists?(validator_filepath) ? validator_file : (!!file_name[/\w*\.rss/] ? "RSSSchema.xsd" : "XMLSchema.xsd")
 
 						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, validator) == true ? "COMPLETE".green : "ERRORS FOUND".red)
 						Xmlvalidator.validate(full_path, validator).each do |error|
 							puts "     " + error.message
-							builder.instance_eval { @had_errors = true if !@had_errors } if name == "feed.rss"
 						end
 					end
 
 					puts "", "Validation with NokoGiri " + "Complete".green, ""
 				end
 			end
+
+			def files_to_validate
+				Dir.glob("build/**/*").select { |file| file.end_with?('.rss', '.xml') }
+			end
+
 			alias :included :registered
 		end
 
@@ -47,5 +41,6 @@ module Middleman
 			document = Nokogiri::XML(File.read(document_path))
 			schema.valid?(document)
 		end
+
 	end
 end
