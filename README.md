@@ -1,6 +1,6 @@
 # Middleman::Xmlvalidator
 
-TODO: Write a gem description
+This gem is used with middleman to validate the RSS and XML files that are generated in the build folder. The gem uses NokoGiri and some different XML schemas to validate the files in question. Dig into the code to see how it works. It's pretty straight forward.
 
 ## Installation
 
