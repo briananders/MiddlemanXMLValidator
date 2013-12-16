@@ -11,9 +11,9 @@ Gem::Specification.new do |g|
   g.version       = Middleman::Xmlvalidator::VERSION
   g.authors       = ["briananders"]
   g.email         = ["anders.brian@icloud.com"]
-  g.description   = %q{This g is a middleman extension that is used for validating xml and rss files in your build folder.}
+  g.description   = %q{This gem is a middleman extension that is used for validating xml and rss files in your build folder.}
   g.summary       = %q{middleman extension to validate xml and rss files.}
-  g.homepage      = ""
+  g.homepage      = "http://briananders.me"
   g.license       = "MIT"
 
   g.files         = `git ls-files`.split($/)
