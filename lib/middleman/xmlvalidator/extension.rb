@@ -3,49 +3,31 @@ module Middleman
     class << self
 			def registered(app)
 				require 'nokogiri'
+
 				app.after_build do |builder|
 					puts "", "Validating with NokoGiri", ""
+					p Xmlvalidator.files_to_validate
 
-					Dir.glob("build/**/*BingSiteAuth.xml").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'BingSiteAuth.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'BingSiteAuth.xsd').each do |error|
+					Xmlvalidator.files_to_validate.each do |full_path|
+						file_name = full_path.split('/').last
+						validator_file = file_name.gsub(/\.\w*/, '.xsd')
+						validator_filepath = File.join(File.dirname(__FILE__), '/schema/' + validator_file)
+						validator = File.exists?(validator_filepath) ? validator_file : (file_name.end_with?('.rss') ? "RSSSchema.xsd" : "XMLSchema.xsd")
+
+						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, validator) == true ? "COMPLETE".green : "ERRORS FOUND".red)
+						Xmlvalidator.validate(full_path, validator).each do |error|
 							puts "     " + error.message
-						end
-					end
-
-					Dir.glob("build/**/*crossdomain.xml").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'crossdomain.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'crossdomain.xsd').each do |error|
-							puts "     " + error.message
-						end
-					end
-
-					Dir.glob("build/**/*Sitemap.xml").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'Sitemap3.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'Sitemap3.xsd').each do |error|
-							puts "     " + error.message
-						end
-					end
-
-					Dir.glob("build/**/*.rss").each do |full_path|
-						puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'RSSSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-						Xmlvalidator.validate(full_path, 'RSSSchema.xsd').each do |error|
-							puts "     " + error.message
-						end
-					end
-
-					Dir.glob("build/**/*.xml").each do |full_path|
-						if not (full_path.match(/^.*BingSiteAuth.xml$/) || full_path.match(/^.*crossdomain.xml$/) || full_path.match(/^.*Sitemap.xml$/))
-							puts "  validating".blue + "  #{full_path}....." + (Xmlvalidator.valid(full_path, 'XMLSchema.xsd') == true ? "COMPLETE".green : "ERRORS FOUND".red)
-							Xmlvalidator.validate(full_path, 'XMLSchema.xsd').each do |error|
-								puts "     " + error.message
-							end
 						end
 					end
 
 					puts "", "Validation with NokoGiri " + "Complete".green, ""
 				end
 			end
+
+			def files_to_validate
+				Dir.glob("build/**/*.{xml,rss}")
+			end
+
 			alias :included :registered
 		end
 
@@ -60,5 +42,6 @@ module Middleman
 			document = Nokogiri::XML(File.read(document_path))
 			schema.valid?(document)
 		end
+
 	end
 end
